@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="run" type="Stack Run Configuration" factoryName="Haskell Stack Run">
+    <module name="cars" />
+    <option name="EXECUTABLE" value="/bin/stack" />
+    <option name="EXECUTABLE_ARGUMENTS" value="run" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
