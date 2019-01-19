@@ -24,6 +24,7 @@ dependencies:
 - GLFW-b
 - OpenGL
 - monad-loops
+- bytestring
 
 library:
   source-dirs: src
