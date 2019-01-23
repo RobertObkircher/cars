@@ -102,9 +102,7 @@ data Universe a = Universe
   } deriving (Eq, Show)
 
 makeStreet :: Universe Cell
--- makeStreet = Universe [] (Car 4) [Empty, Empty, Car 1, Empty, Empty, Empty, Car 0, Car 0, Empty, Empty]
--- makeStreet = Universe [] (Car 4) [Empty, Empty, Empty, Empty, Empty, Empty, Empty]
-makeStreet = Universe [] (Car 1) (replicate 5 Empty)
+makeStreet = Universe [] (Car 4) $ [Empty, Empty, Car 1, Empty, Empty, Empty, Car 0, Car 0] ++ replicate 30 Empty
 
 toVertList :: Universe Cell -> [Float]
 toVertList Universe{..} = concat $ zipWith toVert list [0..]
@@ -143,7 +141,7 @@ instance Comonad Universe where
 update x = x =>> acceleration =>> slowingDown =>> vehicleMotion
 
 maxSpeed :: Int
-maxSpeed = 1
+maxSpeed = 5
 
 acceleration :: Universe Cell -> Cell
 acceleration u = case extract u of
