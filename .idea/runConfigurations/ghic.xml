@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ghic" type="Stack Run Configuration" factoryName="Haskell Stack Run">
+    <module name="cars" />
+    <option name="EXECUTABLE" value="/usr/bin/stack" />
+    <option name="EXECUTABLE_ARGUMENTS" value="ghci" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

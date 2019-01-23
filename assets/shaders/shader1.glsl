@@ -31,7 +31,7 @@ layout (points) in;
 layout (triangle_strip, max_vertices = 4) out;
 
 void main() {
-  float size = 0.05;
+  float size = 0.03;
   fColor = gs_in[0].color;
   gl_Position = gl_in[0].gl_Position + vec4(-size, -size, 0.0, 0.0);
   EmitVertex();

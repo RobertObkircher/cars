@@ -24,7 +24,9 @@ dependencies:
 - GLFW-b
 - OpenGL
 - monad-loops
+- comonad > 5
 - bytestring
+- containers
 
 library:
   source-dirs: src
