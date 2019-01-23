@@ -36,6 +36,7 @@ someFunc = do
   GL.vertexAttribArray (GL.AttribLocation 1) $= GL.Enabled
   state <- newIORef makeStreet
   whileM_ (not <$> GLFW.windowShouldClose window) $ do
+    GL.clear [GL.ColorBuffer]
     street <- readIORef state
     let verts = toVertList street
     withArrayLen verts $ \count arr ->
@@ -88,13 +89,13 @@ logAndExit s = hPutStrLn stderr s >> exitFailure
 data Cell
   = Car Int -- ^ speed
   | Empty
-  deriving (Eq)
+  deriving (Eq, Show)
 
 data Universe a = Universe
   { before :: [a]
   , focus :: a
   , after :: [a]
-  } deriving (Eq)
+  } deriving (Eq, Show)
 
 makeStreet :: Universe Cell
 -- makeStreet = Universe [Empty, Empty] (Car 4) [Empty, Empty, Car 1, Empty, Empty, Empty, Car 0, Car 0, Empty, Empty]
@@ -138,7 +139,7 @@ instance Comonad Universe where
 update x = x =>> acceleration =>> slowingDown =>> vehicleMotion
 
 maxSpeed :: Int
-maxSpeed = 3
+maxSpeed = 5
 
 acceleration :: Universe Cell -> Cell
 acceleration u = case extract u of
