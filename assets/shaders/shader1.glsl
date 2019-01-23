@@ -1,5 +1,7 @@
 // https://learnopengl.com/Advanced-OpenGL/Geometry-Shader
 
+#define M_PI 3.1415926535897932384626433832795
+
 #ifdef VertexShader
 
 layout (location = 0) in float aPos;
@@ -13,7 +15,9 @@ out VS_OUT {
 
 void main()
 {
-    gl_Position = vec4(2 * aPos - 1 + 1/numCells, 0.0, 0.0, 1.0);
+    float angle = 2.0 * M_PI * aPos ;
+    gl_Position = vec4(0.8 * cos(angle), 0.8 * sin(angle), 0.0, 1.0);
+//    gl_Position = vec4(2 * aPos - 1 + 1/numCells, 0.0, 0.0, 1.0);
     float base = 0.4;
     float maxSpeed = 5.0;
     float scale = (1 - base) / maxSpeed;
