@@ -5,13 +5,15 @@
 layout (location = 0) in float aPos;
 layout (location = 1) in float aSpeed;
 
+uniform float numCells;
+
 out VS_OUT {
   vec3 color;
 } vs_out;
 
 void main()
 {
-    gl_Position = vec4(2 * aPos - 1, 0.0, 0.0, 1.0);
+    gl_Position = vec4(2 * aPos - 1 + 1/numCells, 0.0, 0.0, 1.0);
     float base = 0.4;
     float maxSpeed = 5.0;
     float scale = (1 - base) / maxSpeed;
@@ -22,6 +24,8 @@ void main()
 
 #ifdef GeometryShader
 
+uniform float numCells;
+
 in VS_OUT {
   vec3 color;
 } gs_in[];
@@ -31,7 +35,7 @@ layout (points) in;
 layout (triangle_strip, max_vertices = 4) out;
 
 void main() {
-  float size = 0.03;
+  float size = 1 / numCells;
   fColor = gs_in[0].color;
   gl_Position = gl_in[0].gl_Position + vec4(-size, -size, 0.0, 0.0);
   EmitVertex();

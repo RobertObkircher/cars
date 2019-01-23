@@ -35,9 +35,13 @@ someFunc = do
   GL.vertexAttribArray (GL.AttribLocation 0) $= GL.Enabled
   GL.vertexAttribArray (GL.AttribLocation 1) $= GL.Enabled
   state <- newIORef makeStreet
+  numCellsUniformLocation <- GL.get $ GL.uniformLocation shader1 "numCells"
+  let numCellsUniform = GL.uniform numCellsUniformLocation :: GL.StateVar GL.GLfloat
   whileM_ (not <$> GLFW.windowShouldClose window) $ do
     GL.clear [GL.ColorBuffer]
     street <- readIORef state
+    let numCells = length (before street) + length (after street) + 1
+    numCellsUniform $= fromIntegral numCells
     let verts = toVertList street
     withArrayLen verts $ \count arr ->
       GL.bufferData GL.ArrayBuffer $=
@@ -98,9 +102,9 @@ data Universe a = Universe
   } deriving (Eq, Show)
 
 makeStreet :: Universe Cell
--- makeStreet = Universe [Empty, Empty] (Car 4) [Empty, Empty, Car 1, Empty, Empty, Empty, Car 0, Car 0, Empty, Empty]
--- makeStreet = Universe [Empty, Empty] (Car 4) [Empty, Empty, Empty, Empty, Empty, Empty, Empty]
-makeStreet = Universe [Empty, Empty, Empty] (Car 2) (replicate 20 Empty)
+-- makeStreet = Universe [] (Car 4) [Empty, Empty, Car 1, Empty, Empty, Empty, Car 0, Car 0, Empty, Empty]
+-- makeStreet = Universe [] (Car 4) [Empty, Empty, Empty, Empty, Empty, Empty, Empty]
+makeStreet = Universe [] (Car 1) (replicate 5 Empty)
 
 toVertList :: Universe Cell -> [Float]
 toVertList Universe{..} = concat $ zipWith toVert list [0..]
@@ -139,7 +143,7 @@ instance Comonad Universe where
 update x = x =>> acceleration =>> slowingDown =>> vehicleMotion
 
 maxSpeed :: Int
-maxSpeed = 5
+maxSpeed = 1
 
 acceleration :: Universe Cell -> Cell
 acceleration u = case extract u of
